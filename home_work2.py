@@ -6,13 +6,19 @@ def decode_instruction(instruction: str) -> str:
     for char in instruction:
         if char == ']':
             decoded_str = ''
-            while stack[-1] != '[':
-                decoded_str = stack.pop() + decoded_str
-            stack.pop()  # Удаляем '['
+            for sign in stack[::-1]:
+                if sign == '[':
+                    stack.pop()  # Удаляем '['
+                    break
+                else:
+                    decoded_str = stack.pop() + decoded_str
 
             num_str = ''
-            while stack and stack[-1].isdigit():
-                num_str = stack.pop() + num_str
+            for sign in stack[::-1]:
+                if sign.isdigit():
+                    num_str = stack.pop() + num_str
+                else:
+                    break
             num = int(num_str)
 
             stack.append(decoded_str * num)
