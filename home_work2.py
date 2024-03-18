@@ -25,8 +25,13 @@ def decode_instruction(instruction: str) -> str:
         else:
             stack.append(char)
 
-    return ''.join(stack)
-
+    decode_instruction = ''
+    for item in stack:
+        if isinstance(item, tuple):
+            decode_instruction += item[0] * item[1]
+        else:
+            decode_instruction += item
+    return decode_instruction            
 
 def main():
     compressed_instruction = input().strip()
